@@ -21,4 +21,8 @@ export class RoomDataProvider {
   updateRoom(room: Room) {
     this.roomList$.update(room.id, room);
   }
+
+  removeRoom(room: Room) {
+    this.roomList$.remove(room.id);
+  }
 }

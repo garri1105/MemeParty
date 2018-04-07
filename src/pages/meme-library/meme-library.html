@@ -1,0 +1,15 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MemeLibrary</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <button *ngFor="let image of images" class="tile">
+    <ion-img [src]="'../../assets/memelibrary/' + image"></ion-img>
+  </button>
+</ion-content>
