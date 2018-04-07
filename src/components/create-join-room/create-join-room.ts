@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Player} from "../../models/player/player";
+import {Room} from "../../models/room/room";
 
 @Component({
   selector: 'create-join-room',
@@ -7,7 +8,10 @@ import {Player} from "../../models/player/player";
 })
 export class CreateJoinRoomComponent {
 
-  @Input() player: Player;
+  player = {} as Player;
+  room = {} as Room;
+
   constructor() {
+
   }
 }

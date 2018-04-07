@@ -9,8 +9,6 @@ import {Player} from "../../models/player/player";
 })
 export class HomePage {
 
-  player = {} as Player;
-
   constructor() {
   }
 }
