@@ -1,5 +1,12 @@
 <!-- Generated template for the PlayerListComponent component -->
 <div>
-  Player list: <br/>
+
+  Room ID: {{roomId}} <br/>
+
+  <ion-list no-lines>
+    <ion-item *ngFor="let playerName of playerNames | async">
+      {{ playerName }}
+    </ion-item>
+  </ion-list>
 
 </div>
