@@ -18,11 +18,11 @@ import { Room } from "../../models/room/room"
 export class LobbyPage {
 
   player: Player;
-  room: Room;
+  roomId: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.player = this.navParams.get("player");
-    this.room = this.navParams.get("room");
+    this.roomId = this.navParams.get("roomId");
   }
 
   ionViewDidLoad() {
