@@ -26,7 +26,7 @@ export class CreateJoinRoomComponent {
         room.users.push(this.player);
         this.roomData.updateRoom(room);
       });
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomKey': this.roomId});
+    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId});
   }
 
   createRoom() {
@@ -38,7 +38,7 @@ export class CreateJoinRoomComponent {
 
     this.roomData.addRoom(room);
 
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomKey': room.id});
+    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': room.id});
   }
 
   static makeId(length: number) {
