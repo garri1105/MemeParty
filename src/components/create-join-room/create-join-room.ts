@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Player} from "../../models/player/player";
 import {Room} from "../../models/room/room";
+import {NavController} from "ionic-angular";
 
 @Component({
   selector: 'create-join-room',
@@ -9,9 +10,13 @@ import {Room} from "../../models/room/room";
 export class CreateJoinRoomComponent {
 
   player = {} as Player;
-  room = {} as Room;
+  roomId: string;
 
-  constructor() {
+  constructor(private navCtrl: NavController) {
+  }
 
+  toLobbyPage() {
+    this.player.host = true;
+    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId});
   }
 }
