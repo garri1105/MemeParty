@@ -1,6 +1,6 @@
 {
   "name": "HomiHacks",
-  "app_id": "",
+  "app_id": "9de65fc0",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
