@@ -3,6 +3,7 @@ import {Player} from "../../models/player/player";
 import {NavController} from "ionic-angular";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {Room} from "../../models/room/room";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'create-join-room',
@@ -11,24 +12,42 @@ import {Room} from "../../models/room/room";
 export class CreateJoinRoomComponent {
 
   player = {} as Player;
-  room: Room;
+  roomId: string;
 
   constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
   }
 
   joinRoom() {
-    this.room = this.roomData.joinRoom(this.room.id);
     this.player.host = false;
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'room': this.room});
+    this.roomData.getRoomList()
+      .valueChanges().pipe(take(1))
+      .subscribe(roomList => {
+        let room = roomList.filter(room => room.id === this.roomId)[0];
+        room.users.push(this.player);
+        this.roomData.updateRoom(room);
+      });
+    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomKey': this.roomId});
   }
 
   createRoom() {
-    this.room = this.roomData.createRoom();
     this.player.host = true;
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'room': this.room});
+    let room: Room = {
+      id: CreateJoinRoomComponent.makeId(5),
+      users: [this.player]
+    };
+
+    this.roomData.addRoom(room);
+
+    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomKey': room.id});
   }
 
-  ngOnInit() {
-    this.room = {} as Room;
+  static makeId(length: number) {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < length; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
   }
 }

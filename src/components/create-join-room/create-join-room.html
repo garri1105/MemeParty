@@ -6,9 +6,9 @@
   <ion-card-content>
     <ion-item>
       <ion-label floating>Room ID</ion-label>
-      <ion-input [(ngModel)]="room.id"></ion-input>
+      <ion-input [(ngModel)]="roomId"></ion-input>
     </ion-item>
-    <button ion-button [disabled]="!player.name || !room?.id" (click)="joinRoom()">Join</button>
+    <button ion-button [disabled]="!player.name || !roomId" (click)="joinRoom()">Join</button>
     <button ion-button [disabled]="!player.name" (click)="createRoom()">Create</button>
   </ion-card-content>
 </ion-card>
