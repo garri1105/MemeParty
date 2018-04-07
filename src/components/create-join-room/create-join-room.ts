@@ -11,7 +11,7 @@ import {Room} from "../../models/room/room";
 export class CreateJoinRoomComponent {
 
   player = {} as Player;
-  room = {} as Room;
+  room: Room;
 
   constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
   }
@@ -26,5 +26,9 @@ export class CreateJoinRoomComponent {
     this.room = this.roomData.createRoom();
     this.player.host = true;
     this.navCtrl.push('LobbyPage', {'player': this.player, 'room': this.room});
+  }
+
+  ngOnInit() {
+    this.room = {} as Room;
   }
 }
