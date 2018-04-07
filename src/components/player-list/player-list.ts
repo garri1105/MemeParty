@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {Player} from "../../models/player/player";
+import {Room} from "../../models/room/room";
 
 /**
  * Generated class for the PlayerListComponent component.
@@ -13,12 +14,10 @@ import {Player} from "../../models/player/player";
 })
 export class PlayerListComponent {
 
-  text: string;
-  @Input() player: Player
+  @Input() room: Room
 
   constructor() {
-    console.log('Hello PlayerListComponent Component');
-    this.text = 'Player list';
+
   }
 
 }
