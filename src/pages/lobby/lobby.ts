@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Player} from "../../models/player/player";
+import { Player } from "../../models/player/player";
+import { Room } from "../../models/room/room"
 
 /**
  * Generated class for the LobbyPage page.
@@ -17,9 +18,11 @@ import {Player} from "../../models/player/player";
 export class LobbyPage {
 
   player: Player;
+  room: Room;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.player = this.navParams.get("player")
+    this.player = this.navParams.get("player");
+    this.room = this.navParams.get("room");
   }
 
   ionViewDidLoad() {
