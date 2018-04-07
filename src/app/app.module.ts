@@ -9,6 +9,7 @@ import {FIREBASE_CONFIG} from "./firebase.credentials";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireDatabaseModule} from "angularfire2/database";
+import { RoomDataProvider } from '../providers/room-data/room-data';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    RoomDataProvider
   ]
 })
 export class AppModule {}
