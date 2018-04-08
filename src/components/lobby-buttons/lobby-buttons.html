@@ -1,6 +1,7 @@
 <!-- Generated template for the LobbyButtonsComponent component -->
 <div>
-  <button ion-button [navPush]="'PhotoSelectionPage'">Select Photo</button>
+  <button ion-button (click)="toPhotoSelection()">Select Photo</button>
   <button ion-button>Submit</button>
   <button ion-button>Start Game</button>
+  <ion-input [(ngModel)]="data"></ion-input>
 </div>

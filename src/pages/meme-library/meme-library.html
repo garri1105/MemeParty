@@ -1,6 +1,9 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
+    <ion-buttons end>
+      <button ion-button (click)="toLobby()">Done</button>
+    </ion-buttons>
     <ion-title>MemeLibrary</ion-title>
   </ion-navbar>
 
@@ -8,8 +11,5 @@
 
 
 <ion-content padding>
-
-  <button *ngFor="let image of images" class="tile">
-    <ion-img [src]="'../../assets/memelibrary/' + image"></ion-img>
-  </button>
+  <meme-tiles (selectedImage)="getSelectedImage($event)" [images]="images"></meme-tiles>
 </ion-content>

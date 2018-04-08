@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {Component, Input} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -7,13 +7,25 @@ import {IonicPage} from 'ionic-angular';
   templateUrl: 'meme-library.html',
 })
 export class MemeLibraryPage {
-
   images: string[];
+  imageIndex: number;
+  callback: any;
 
-  constructor() {
+  constructor(private navCtrl: NavController, private navParams: NavParams) {
+    this.callback = this.navParams.get('callback');
+  }
+
+  getSelectedImage(event: any) {
+    this.imageIndex = event;
+  }
+
+  toLobby() {
+    let imageName = this.images[this.imageIndex];
+    this.callback(imageName).then(this.navCtrl.pop());
   }
 
   ionViewWillLoad() {
+
     this.images = ("amitheonlyone.jpg\n" +
       "arielhippy.jpg\n" +
       "arthursfirst.jpg\n" +
@@ -75,4 +87,5 @@ export class MemeLibraryPage {
       "youcanthangoutwithus.jpg\n" +
       "yuno.jpg").split('\n');
   }
+
 }

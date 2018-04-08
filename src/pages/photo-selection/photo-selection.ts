@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import {IonicPage, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,7 +10,11 @@ export class PhotoSelectionPage {
   tab1Root: string;
   tab2Root: string;
   tab3Root: string;
-  constructor() {
+  callback: any;
+
+  constructor(private navParams: NavParams) {
+    this.callback = this.navParams.get('callback');
+
     this.tab1Root = 'MemeLibraryPage';
     this.tab2Root = 'CameraPage';
     this.tab3Root = 'PhotoLibraryPage'

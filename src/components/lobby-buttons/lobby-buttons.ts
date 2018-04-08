@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
+import {NavController} from "ionic-angular";
 
-/**
- * Generated class for the LobbyButtonsComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'lobby-buttons',
   templateUrl: 'lobby-buttons.html'
 })
 export class LobbyButtonsComponent {
 
-  text: string;
-
-  constructor() {
-    console.log('Hello LobbyButtonsComponent Component');
-    this.text = 'Hello World';
+  data: string;
+  constructor(private navCtrl: NavController) {
   }
 
+  getData = function(data) {
+    return new Promise((resolve, reject) => {
+      this.data = data;
+      resolve();
+    }).then(r => console.log(this.data));
+  };
+
+  toPhotoSelection() {
+    this.navCtrl.push('MemeLibraryPage', {
+      callback: this.getData
+    });
+  }
 }
