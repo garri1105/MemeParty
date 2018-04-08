@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <ion-title>voting</ion-title>
   </ion-navbar>
 
@@ -12,7 +12,7 @@
     <ion-card-content id="cardText">
       {{submission.caption}}
     </ion-card-content>
-    <button ion-button full>Vote</button>
+    <button ion-button full (click)="finishVoting()">Vote</button>
   </ion-card>
 
 </ion-content>
