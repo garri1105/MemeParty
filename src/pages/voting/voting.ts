@@ -64,6 +64,7 @@ export class VotingPage {
               }
             }
           }
+          this.roomData.updateRoom(room);
 
           let alert = this.alert.create({
             title: 'Round results!',
