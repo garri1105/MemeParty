@@ -24,9 +24,4 @@ export class LobbyPage {
     this.player = this.navParams.get("player");
     this.roomId = this.navParams.get("roomId");
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LobbyPage');
-  }
-
 }
