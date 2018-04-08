@@ -19,9 +19,14 @@ export class LobbyPage {
 
   player: Player;
   roomId: string;
+  lobbyImage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.player = this.navParams.get("player");
     this.roomId = this.navParams.get("roomId");
+    this.lobbyImage = this.navParams.get("image");
+    if (!this.lobbyImage) {
+      this.lobbyImage = "../../assets/imgs/placeholder.png"
+    }
   }
 }
