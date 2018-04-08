@@ -24,6 +24,7 @@ export class CreateJoinRoomComponent {
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
         room.users.push(this.player);
+        console.log(room.users)
         this.roomData.updateRoom(room);
       });
     this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId});

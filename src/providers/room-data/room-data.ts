@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {Room} from "../../models/room/room";
+//import {Player} from "../../models/player/player";
 
 @Injectable()
 export class RoomDataProvider {
@@ -19,10 +20,10 @@ export class RoomDataProvider {
   }
 
   updateRoom(room: Room) {
-    this.roomList$.update(room.id, room);
+    this.roomList$.set(room.id, room);
   }
 
-  removeRoom(room: Room) {
+  removeRoom(room: Room, player: Player) {
     this.roomList$.remove(room.id);
   }
 }
