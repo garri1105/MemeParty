@@ -28,8 +28,5 @@ export class VotingPage {
   }
 
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VotingPage');
-  }
 
 }

@@ -8,7 +8,7 @@
 
 <ion-content class="card-background-page">
   <ion-card *ngFor="let submission of submissions">
-    <img [src]='"../../assets/memelibrary/" + submission.imagePath'/>
+    <img [src]='"assets/memelibrary/" + submission.imagePath'/>
     <ion-card-content id="cardText">
       {{submission.caption}}
     </ion-card-content>
