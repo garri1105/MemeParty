@@ -20,6 +20,7 @@ export class LobbyPage {
   player: Player;
   roomId: string;
   lobbyImage: string;
+  imageName: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.player = this.navParams.get("player");
@@ -28,5 +29,18 @@ export class LobbyPage {
     if (!this.lobbyImage) {
       this.lobbyImage = "../../assets/imgs/placeholder.png"
     }
+  }
+
+  getData = function(data) {
+    return new Promise((resolve, reject) => {
+      this.imageName = data;
+      resolve();
+    });
+  };
+
+  toPhotoSelection() {
+    this.navCtrl.push('MemeLibraryPage', {
+      callback: this.getData
+    });
   }
 }
