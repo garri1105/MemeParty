@@ -4,7 +4,7 @@
   Room ID: {{roomId}} <br/>
 
   <ion-list no-lines>
-    <ion-item *ngFor="let playerName of playerNames">
+    <ion-item *ngFor="let playerName of playerNames | async">
       {{ playerName }}
     </ion-item>
   </ion-list>

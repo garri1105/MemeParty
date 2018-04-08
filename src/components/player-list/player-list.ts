@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {NavController} from "ionic-angular";
 import {Player} from "../../models/player/player";
 import {Room} from "../../models/room/room";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
@@ -14,7 +15,7 @@ export class PlayerListComponent {
   playerNames: Observable<any[]>;
   @Input() roomId: string;
 
-  constructor(private roomData: RoomDataProvider) {
+  constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
     // Extract player names from database
     this.roomData.getRoomList().valueChanges().subscribe(
       roomList => {

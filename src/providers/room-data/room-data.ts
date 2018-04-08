@@ -23,7 +23,7 @@ export class RoomDataProvider {
     this.roomList$.set(room.id, room);
   }
 
-  removeRoom(room: Room, player: Player) {
+  removeRoom(room: Room) {
     this.roomList$.remove(room.id);
   }
 }
