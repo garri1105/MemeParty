@@ -26,12 +26,9 @@ export class CaptioningPage {
       .valueChanges().pipe(take(1))
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
+        room.images.splice(0, 1);
         this.images = room.images;
     });
-
-    if (!this.images) {
-      this.images = ["amitheonlyone.jpg", "arielhippy.jpg", "arthursfirst.jpg", "awesomebaby.jpg", "babylaugh.jpg"]
-    }
   }
 }
 

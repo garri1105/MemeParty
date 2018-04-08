@@ -34,6 +34,7 @@ export class CreateJoinRoomComponent {
     this.player.host = true;
     let room: Room = {
       id: CreateJoinRoomComponent.makeId(5),
+      started: false,
       images: ['0'],
       users: [this.player]
     };

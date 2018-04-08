@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Player } from "../../models/player/player";
 import { Room } from "../../models/room/room"
+import {take} from "rxjs/operators";
+import {RoomDataProvider} from "../../providers/room-data/room-data";
 
 
 @IonicPage()
@@ -18,12 +20,16 @@ export class LobbyPage {
   submittedImage: boolean;
   getData: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private roomData: RoomDataProvider) {
+
+    this.listenToHost();
     this.player = this.navParams.get("player");
     this.roomId = this.navParams.get("roomId");
     this.lobbyImage = "assets/imgs/placeholder.png";
     this.selectedImage = false;
-    this.selectedImage = false;
+    this.submittedImage = false;
     let that = this;
 
     this.getData = function(data) {
@@ -35,8 +41,35 @@ export class LobbyPage {
     };
   }
 
+  startGame() {
+    this.roomData.getRoomList()
+      .valueChanges().pipe(take(1))
+      .subscribe(roomList => {
+        let room = roomList.filter(room => room.id === this.roomId)[0];
+        room.started = true;
+        this.roomData.updateRoom(room);
+      });
+  }
+
+  listenToHost() {
+    this.roomData.getRoomList()
+      .valueChanges()
+      .subscribe(roomList => {
+        let room = roomList.filter(room => room.id === this.roomId)[0];
+        if (room.started) {
+          this.navCtrl.push('CaptioningPage', {roomId: this.roomId});
+        }
+      });
+  }
+
   submit() {
-    // Confirm the selected image and add it to the room
+    this.roomData.getRoomList()
+      .valueChanges().pipe(take(1))
+      .subscribe(roomList => {
+        let room = roomList.filter(room => room.id === this.roomId)[0];
+        room.images.push(this.lobbyImage);
+        this.roomData.updateRoom(room);
+      });
 
     this.submittedImage = true;
   }

@@ -4,4 +4,5 @@ export interface Room {
   id: string;
   users: Player[];
   images: string[];
+  started: boolean;
 }
