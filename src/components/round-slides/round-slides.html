@@ -2,12 +2,12 @@
   <ion-slide *ngFor="let image of images; let i = index">
     <h2>Round {{ i+1 }} of {{ images.length }}</h2>
     <ion-card>
-      <img [src]="image"/>
+      <img class="currentPic" [src]="image"/>
       <ion-textarea [(ngModel)]="caption" placeholder="Type your caption here."></ion-textarea>
     </ion-card>
-    <button ion-button (click)="submitCaption(image)" [disabled]="submitted">Submit</button>
+    <button ion-button class="subButton" (click)="submitCaption(image)" [disabled]="submitted">Submit</button>
 
-    <div *ngIf="time >= 0">
+    <div class="timer" *ngIf="time >= 0">
       {{time}}
     </div>
   </ion-slide>
