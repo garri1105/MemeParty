@@ -24,10 +24,17 @@ export class CreateJoinRoomComponent {
       .valueChanges().pipe(take(1))
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
-        room.users.push(this.player);
-        this.roomData.updateRoom(room);
+        if(room) {
+          room.users.push(this.player);
+          this.roomData.updateRoom(room);
+          this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId})
+        } else {
+          location.reload();
+        }
+
       });
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId});
+    ;
+
   }
 
   createRoom() {
