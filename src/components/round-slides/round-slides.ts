@@ -75,7 +75,7 @@ export class RoundSlidesComponent {
       this.slides.lockSwipes(true);
     }
     else {
-      this.navCtrl.setRoot('WinnersPage');
+      this.navCtrl.push('WinnersPage', {roomId: this.roomId});
     }
   }
 }

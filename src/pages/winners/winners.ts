@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the WinnersPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,11 +9,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class WinnersPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  roomId: string;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WinnersPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.roomId = this.navParams.get('roomId');
+    console.log(this.roomId);
   }
 
 }
