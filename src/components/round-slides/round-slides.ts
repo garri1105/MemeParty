@@ -10,6 +10,8 @@ export class RoundSlidesComponent {
   @ViewChild('slides') slides: Slides;
   @Input() images: string[];
   time: string;
+  submissions: Submission[];
+  caption: string;
   timer: any;
 
   constructor(private navCtrl: NavController) {
@@ -20,13 +22,17 @@ export class RoundSlidesComponent {
     }, 1);
   }
 
+  submitCaption() {
+    console.log(this.caption);
+  }
+
   initTimer() {
     let countDownOrigin = new Date().getTime();
     let that = this;
 
     this.timer = setInterval(function() {
       let now = new Date().getTime();
-      let distance = Math.floor((countDownOrigin + 4500 - now)/1000);
+      let distance = Math.floor((countDownOrigin + 45000 - now)/1000);
       that.time = distance+'';
 
       if (distance == 0) {
