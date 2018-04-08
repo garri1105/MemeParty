@@ -6,12 +6,10 @@ import { MemeTilesComponent } from './meme-tiles/meme-tiles';
 @NgModule({
 	declarations: [CreateJoinRoomComponent,
     PlayerListComponent,
-    LobbyButtonsComponent,
     MemeTilesComponent],
 	imports: [],
 	exports: [CreateJoinRoomComponent,
     PlayerListComponent,
-    LobbyButtonsComponent,
     MemeTilesComponent]
 })
 export class ComponentsModule {}
