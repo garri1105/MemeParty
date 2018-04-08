@@ -12,7 +12,7 @@ import {Submission} from "../../models/submission/submission";
 })
 export class CreateJoinRoomComponent {
 
-  player = {score: 0,} as Player;
+  player = {score: 0} as Player;
   roomId: string;
 
   constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
