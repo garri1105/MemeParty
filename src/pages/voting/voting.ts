@@ -17,8 +17,5 @@ export class VotingPage {
                         {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VotingPage');
-  }
 
 }
