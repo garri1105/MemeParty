@@ -68,18 +68,17 @@ export class VotingPage {
           if (!this.updated) {
             this.roomData.updateRoom(room);
             this.updated = true;
+            let alert = this.alert.create({
+              title: 'Round results!',
+              message: resultString
+            });
+            alert.present();
+            setTimeout(() => {
+              alert.dismiss();
+              //console.log('popping page');
+              this.navCtrl.pop().then(r => this.parent.resetView());
+            }, 5000);
           }
-
-          let alert = this.alert.create({
-            title: 'Round results!',
-            message: resultString
-          });
-          alert.present();
-          setTimeout(() => {
-            alert.dismiss();
-            //console.log('popping page');
-            this.navCtrl.pop().then(r => this.parent.resetView());
-          }, 5000);
         }
       });
   }
