@@ -21,7 +21,7 @@ export class RoundSlidesComponent {
   caption: string;
   timer: any;
 
-  secondsTimer = 8;
+  secondsTimer = 20;
 
   constructor(private navCtrl: NavController,
               private roomData: RoomDataProvider) {
