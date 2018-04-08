@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {NavController, Slides} from "ionic-angular";
 import {Submission} from "../../models/submission/submission";
 
@@ -8,16 +8,11 @@ import {Submission} from "../../models/submission/submission";
 })
 export class RoundSlidesComponent {
   @ViewChild('slides') slides: Slides;
-
+  @Input() images: string[];
   time: string;
-  submissions: Submission[];
   timer: any;
 
   constructor(private navCtrl: NavController) {
-    this.submissions = [{imagePath:"gotanymoreofthat.jpg", caption:"You got any more of that good stuff?"} as Submission,
-      {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
-      {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
-
     this.initTimer();
 
     setTimeout(() => {

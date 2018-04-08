@@ -1,8 +1,8 @@
 <ion-slides (ionSlideDidChange)="resetTimer()" #slides>
-  <ion-slide *ngFor="let submission of submissions; let i = index">
+  <ion-slide *ngFor="let image of images; let i = index">
     <h2>Round {{ i+1 }} of {{ submissions.length }}</h2>
     <ion-card>
-      <img [src]='"../../assets/memelibrary/" + submission.imagePath'/>
+      <img [src]='"../../assets/memelibrary/" + image'/>
       <ion-textarea placeholder="Type your caption here."></ion-textarea>
     </ion-card>
     <button ion-button>Submit</button>

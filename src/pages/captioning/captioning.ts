@@ -1,5 +1,9 @@
 import {Component} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {IonicPage, NavParams} from 'ionic-angular';
+import {RoomDataProvider} from "../../providers/room-data/room-data";
+import {Submission} from "../../models/submission/submission";
+import {take} from "rxjs/operators";
+import {Observable} from "rxjs/Observable";
 
 @IonicPage()
 @Component({
@@ -8,8 +12,26 @@ import {IonicPage} from 'ionic-angular';
 })
 export class CaptioningPage {
 
-  constructor() {
+  images: string[];
+  roomId: string;
+  constructor(private roomData: RoomDataProvider,
+              private navParams: NavParams) {
 
+    this.roomId = this.navParams.get('roomId');
+    this.getImages();
+  }
+
+  getImages() {
+    this.roomData.getRoomList()
+      .valueChanges().pipe(take(1))
+      .subscribe(roomList => {
+        let room = roomList.filter(room => room.id === this.roomId)[0];
+        this.images = room.images;
+    });
+
+    if (!this.images) {
+      this.images = ["amitheonlyone.jpg", "arielhippy.jpg", "arthursfirst.jpg", "awesomebaby.jpg", "babylaugh.jpg"]
+    }
   }
 }
 
