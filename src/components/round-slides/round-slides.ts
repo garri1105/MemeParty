@@ -4,6 +4,8 @@ import {Submission} from "../../models/submission/submission";
 import {take} from "rxjs/operators";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {Player} from "../../models/player/player";
+import * as moment from "moment";
+import {WinnersPage} from "../../pages/winners/winners";
 
 @Component({
   selector: 'round-slides',
@@ -18,6 +20,8 @@ export class RoundSlidesComponent {
   submitted: boolean;
   caption: string;
   timer: any;
+
+  secondsTimer = 8;
 
   constructor(private navCtrl: NavController,
               private roomData: RoomDataProvider) {
@@ -46,22 +50,20 @@ export class RoundSlidesComponent {
   }
 
   initTimer() {
-    let countDownOrigin = new Date().getTime();
     let that = this;
-
+    let then = moment();
+    then.add(that.secondsTimer, 'seconds');
     this.timer = setInterval(function() {
-      let now = new Date().getTime();
-      let distance = Math.floor((countDownOrigin + 10000 - now)/1000);
-      that.time = distance+'';
+      let now = moment();
+      that.time = `${then.seconds() - now.seconds()}`;
 
-      if (distance === 0) {
-        that.navCtrl.push('VotingPage', {parent: that, roomId: that.roomId});
+      if (that.time === '0') {
+        that.navCtrl.push('VotingPage', {parent: that, roomId: that.roomId}).then(r => clearInterval(that.timer));
       }
     }, 1000);
   }
 
   resetTimer() {
-    clearInterval(this.timer);
     this.initTimer();
   }
 
@@ -69,7 +71,7 @@ export class RoundSlidesComponent {
     if (this.slides.getActiveIndex() < this.slides.length() - 1) {
       this.caption = '';
       this.submitted = false;
-      this.resetTimer();
+      this.initTimer();
       this.slides.lockSwipes(false);
       this.slides.slideNext();
       this.slides.lockSwipes(true);
