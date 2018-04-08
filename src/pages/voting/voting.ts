@@ -19,6 +19,9 @@ export class VotingPage {
                         {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
                         {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
 
+  }
+
+  listenToPlayers() {
 
   }
 

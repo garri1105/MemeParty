@@ -4,6 +4,7 @@ import {NavController} from "ionic-angular";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {Room} from "../../models/room/room";
 import {take} from "rxjs/operators";
+import {Submission} from "../../models/submission/submission";
 
 @Component({
   selector: 'create-join-room',
@@ -35,6 +36,7 @@ export class CreateJoinRoomComponent {
     let room: Room = {
       id: CreateJoinRoomComponent.makeId(5),
       started: false,
+      submissions: [{player: '0'} as Submission],
       images: ['0'],
       users: [this.player]
     };
