@@ -5,7 +5,7 @@
       <img [src]="image"/>
       <ion-textarea [(ngModel)]="caption" placeholder="Type your caption here."></ion-textarea>
     </ion-card>
-    <button ion-button (click)="submitCaption()">Submit</button>
+    <button ion-button (click)="submitCaption(image)" [disabled]="submitted">Submit</button>
 
     <div *ngIf="time >= 0">
       {{time}}

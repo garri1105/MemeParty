@@ -4,6 +4,7 @@ import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {Submission} from "../../models/submission/submission";
 import {take} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
+import {Player} from "../../models/player/player";
 
 @IonicPage()
 @Component({
@@ -14,10 +15,13 @@ export class CaptioningPage {
 
   images: string[];
   roomId: string;
+  player: Player;
+
   constructor(private roomData: RoomDataProvider,
               private navParams: NavParams) {
 
     this.roomId = this.navParams.get('roomId');
+    this.player = this.navParams.get('player');
     this.getImages();
   }
 

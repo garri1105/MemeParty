@@ -7,4 +7,5 @@ export interface Room {
   submissions: Submission[];
   images: string[];
   started: boolean;
+  voteCount: number;
 }

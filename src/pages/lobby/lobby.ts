@@ -19,12 +19,13 @@ export class LobbyPage {
   selectedImage: boolean;
   submittedImage: boolean;
   getData: any;
+  listenToHost: any;
 
   constructor(private navCtrl: NavController,
               private navParams: NavParams,
               private roomData: RoomDataProvider) {
 
-    this.listenToHost();
+    this.setListenToHost();
     this.player = this.navParams.get("player");
     this.roomId = this.navParams.get("roomId");
     this.lobbyImage = "assets/imgs/placeholder.png";
@@ -51,13 +52,13 @@ export class LobbyPage {
       });
   }
 
-  listenToHost() {
-    this.roomData.getRoomList()
+  setListenToHost() {
+    this.listenToHost = this.roomData.getRoomList()
       .valueChanges()
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
         if (room.started) {
-          this.navCtrl.push('CaptioningPage', {roomId: this.roomId});
+          this.navCtrl.setRoot('CaptioningPage', {roomId: this.roomId, player: this.player});
         }
       });
   }
@@ -78,5 +79,9 @@ export class LobbyPage {
     this.navCtrl.push('MemeLibraryPage', {
       callback: this.getData
     });
+  }
+
+  ionViewWillUnload() {
+    this.listenToHost.unsubscribe();
   }
 }

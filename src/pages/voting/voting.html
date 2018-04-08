@@ -1,17 +1,17 @@
 <ion-header>
 
   <ion-navbar hideBackButton>
-    <ion-title>voting</ion-title>
+    <ion-title>Votes in: {{ count }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content class="card-background-page">
-  <ion-card *ngFor="let submission of submissions">
+  <ion-card *ngFor="let submission of submissions; let i = index">
     <img [src]='submission.imagePath'/>
     <ion-card-content id="cardText">
       {{submission.caption}}
     </ion-card-content>
-    <button ion-button full (click)="finishVoting()">Vote</button>
+    <button ion-button full (click)="vote(i)" [disabled]="voted">Vote</button>
   </ion-card>
 </ion-content>
