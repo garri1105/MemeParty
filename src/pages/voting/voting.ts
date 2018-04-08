@@ -57,7 +57,7 @@ export class VotingPage {
           let results = this.getResults(room.submissions);
           let resultString = results.map(r => r.player + ':' + r.score).join('\n');
 
-          for (let i = 0; i < room.users.length; i++) {
+          for (let i = 1; i < room.users.length; i++) {
             for(let j = 0; j < results.length; j++) {
               if (room.users[i].name === results[j].player) {
                 room.users[i].score += results[j].score;
