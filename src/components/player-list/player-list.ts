@@ -16,15 +16,15 @@ export class PlayerListComponent {
 
   constructor(private roomData: RoomDataProvider) {
     // Extract player names from database
-    this.roomData.getRoomList()
-      .valueChanges()
-      .subscribe(roomList => {
+    this.roomData.getRoomList().valueChanges().subscribe(
+      roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
         let names = []
         for (let user of room.users) {
           names.push(user.name);
         }
         this.playerNames = Observable.of(names);
+        console.log(room);
       });
   }
 
