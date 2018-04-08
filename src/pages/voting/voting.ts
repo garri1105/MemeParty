@@ -21,6 +21,7 @@ export class VotingPage {
   voted: boolean;
   parent: any;
   listenToPlayers: any;
+  updated: boolean;
 
   constructor(private navCtrl: NavController,
               private navParams: NavParams,
@@ -57,14 +58,17 @@ export class VotingPage {
           let results = this.getResults(room.submissions);
           let resultString = results.map(r => r.player + ':' + r.score).join('\n');
 
-          for (let i = 1; i < room.users.length; i++) {
+          for (let i = 0; i < room.users.length; i++) {
             for(let j = 0; j < results.length; j++) {
-              if (room.users[i].name === results[j].player) {
+              if (room.users[i].name.trim() === results[j].player.trim()) {
                 room.users[i].score += results[j].score;
               }
             }
           }
-          this.roomData.updateRoom(room);
+          if (!this.updated) {
+            this.roomData.updateRoom(room);
+            this.updated = true;
+          }
 
           let alert = this.alert.create({
             title: 'Round results!',
