@@ -22,8 +22,8 @@ export class WinnersPage {
     this.roomId = this.navParams.get('roomId');
     //this.getPlayersFromRoom();
     this.players = [{name: "Joe", score:42} as Player,
-                    {name: "Teddy", score:12} as Player,
-                    {name: "Nancy", score:5} as Player]
+                   {name: "Teddy", score:12} as Player,
+                   {name: "Nancy", score:5} as Player]
     //console.log(this.players)
   }
 
