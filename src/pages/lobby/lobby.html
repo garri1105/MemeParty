@@ -15,6 +15,6 @@
   <div id="lobbyButtons">
     <button ion-button full (click)="toPhotoSelection()">Select Photo</button><br/>
     <button ion-button full>Submit</button><br/>
-    <button ion-button full *ngIf="player.host">Start Game</button>
+    <button ion-button full [navPush]="'CaptioningPage'" *ngIf="player.host">Start Game</button>
   </div>
 </ion-content>

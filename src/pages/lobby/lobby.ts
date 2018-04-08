@@ -33,9 +33,9 @@ export class LobbyPage {
 
   getData = function(data) {
     return new Promise((resolve, reject) => {
-      this.imageName = data;
+      this.data = data;
       resolve();
-    });
+    }).then(r => console.log(this.data));
   };
 
   toPhotoSelection() {
