@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the VotingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Submission } from "../../models/submission/submission";
 
 @IonicPage()
 @Component({
@@ -15,7 +9,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class VotingPage {
 
+  submissions: Submission[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.submissions = [{imagePath:"gotanymoreofthat.jpg", caption:"You got any more of that good stuff?"} as Submission,
+                        {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
+                        {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
   }
 
   ionViewDidLoad() {

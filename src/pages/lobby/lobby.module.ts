@@ -6,8 +6,7 @@ import { PlayerListComponent } from '../../components/player-list/player-list'
 @NgModule({
   declarations: [
     LobbyPage,
-    PlayerListComponent
-  ],
+    PlayerListComponent],
   imports: [
     IonicPageModule.forChild(LobbyPage),
   ],
