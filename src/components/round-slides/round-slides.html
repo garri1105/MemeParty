@@ -2,10 +2,10 @@
   <ion-slide *ngFor="let submission of submissions; let i = index">
     <h2>Round {{ i+1 }} of {{ submissions.length }}</h2>
     <ion-card>
-      <img [src]='"../../assets/memelibrary/" + submission.imagePath'/>
-      <ion-textarea placeholder="Type your caption here."></ion-textarea>
+      <img [src]='"assets/memelibrary/" + submission.imagePath'/>
+      <ion-textarea [(ngModel)]="caption" placeholder="Type your caption here."></ion-textarea>
     </ion-card>
-    <button ion-button>Submit</button>
+    <button ion-button (click)="submitCaption()">Submit</button>
 
     <div *ngIf="time >= 0">
       {{time}}

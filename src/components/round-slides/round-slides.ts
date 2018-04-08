@@ -11,12 +11,13 @@ export class RoundSlidesComponent {
 
   time: string;
   submissions: Submission[];
+  caption: string;
   timer: any;
 
   constructor(private navCtrl: NavController) {
     this.submissions = [{imagePath:"gotanymoreofthat.jpg", caption:"You got any more of that good stuff?"} as Submission,
-      {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
-      {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
+                        {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
+                        {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
 
     this.initTimer();
 
@@ -25,13 +26,17 @@ export class RoundSlidesComponent {
     }, 1);
   }
 
+  submitCaption() {
+    console.log(this.caption);
+  }
+
   initTimer() {
     let countDownOrigin = new Date().getTime();
     let that = this;
 
     this.timer = setInterval(function() {
       let now = new Date().getTime();
-      let distance = Math.floor((countDownOrigin + 4500 - now)/1000);
+      let distance = Math.floor((countDownOrigin + 45000 - now)/1000);
       that.time = distance+'';
 
       if (distance == 0) {
