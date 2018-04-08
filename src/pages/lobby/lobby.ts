@@ -23,7 +23,7 @@ export class LobbyPage {
     this.roomId = this.navParams.get("roomId");
     this.lobbyImage = "assets/imgs/placeholder.png";
     this.selectedImage = false;
-    this.selectedImage = false;
+    this.submittedImage = false;
     let that = this;
 
     this.getData = function(data) {

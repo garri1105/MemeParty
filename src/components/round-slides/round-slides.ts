@@ -11,18 +11,23 @@ export class RoundSlidesComponent {
 
   time: string;
   submissions: Submission[];
+  caption: string;
   timer: any;
 
   constructor(private navCtrl: NavController) {
     this.submissions = [{imagePath:"gotanymoreofthat.jpg", caption:"You got any more of that good stuff?"} as Submission,
-      {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
-      {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
+                        {imagePath:"awesomebaby.jpg", caption:"Fuck yeah"} as Submission,
+                        {imagePath:"killyourself.jpg", caption:"Woah There"} as Submission];
 
     this.initTimer();
 
     setTimeout(() => {
       this.slides.lockSwipes(true);
     }, 1);
+  }
+
+  submitCaption() {
+    console.log(this.caption);
   }
 
   initTimer() {
