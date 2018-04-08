@@ -47,20 +47,19 @@ export class VotingPage {
       .valueChanges()
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
+
         if (room.voteCount === room.submissions.length - 1) {
           let results = this.getResults(room.submissions);
-          let resultString = results.map(r => r.player + ':' + r.score).join('');
-          console.log(results);
-          console.log(resultString);
+          let resultString = results.map(r => r.player + ':' + r.score).join('\n');
+
           let alert = this.alert.create({
             title: 'Round results!',
             message: resultString
           });
           alert.present();
           setTimeout(() => {
-            this.parent.ionViewWillEnter();
             alert.dismiss();
-            this.navCtrl.pop();
+            this.navCtrl.pop().then(r => this.parent.ionViewWillEnter());
           }, 5000);
         }
       });
@@ -81,7 +80,7 @@ export class VotingPage {
         room.submissions[index+1].score += 1;
         room.voteCount += 1;
         this.count = room.voteCount;
-        this.roomData.updateRoom(room);
+        setTimeout(() => this.roomData.updateRoom(room), 5);
       });
   }
 
