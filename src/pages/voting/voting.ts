@@ -51,8 +51,8 @@ export class VotingPage {
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
 
-        console.log('VoteCount: ' + room.voteCount);
-        console.log('Submissions: ' + (room.submissions.length - 1));
+        //console.log('VoteCount: ' + room.voteCount);
+        //console.log('Submissions: ' + (room.submissions.length - 1));
         if (room.submissions.length - 1 !== 0 && room.voteCount === room.submissions.length - 1) {
           let results = this.getResults(room.submissions);
           let resultString = results.map(r => r.player + ':' + r.score).join('\n');
@@ -72,7 +72,7 @@ export class VotingPage {
           alert.present();
           setTimeout(() => {
             alert.dismiss();
-            console.log('popping page');
+            //console.log('popping page');
             this.navCtrl.pop().then(r => this.parent.resetView());
           }, 5000);
         }
@@ -99,7 +99,7 @@ export class VotingPage {
   }
 
   ionViewWillLeave() {
-    console.log('unsubscribing');
+    //console.log('unsubscribing');
     this.listenToPlayers.unsubscribe();
 
     if (this.player.host && this.voted) {
@@ -107,7 +107,7 @@ export class VotingPage {
         .valueChanges().pipe(take(1))
         .subscribe(roomList => {
           let room = roomList.filter(room => room.id === this.roomId)[0];
-          console.log('wipingData');
+          //console.log('wipingData');
           room.voteCount = 0;
           room.submissions = [{player: '0'} as Submission];
           this.roomData.updateRoom(room);

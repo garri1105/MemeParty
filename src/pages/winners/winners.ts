@@ -20,9 +20,11 @@ export class WinnersPage {
               private roomData: RoomDataProvider) {
 
     this.roomId = this.navParams.get('roomId');
-    console.log(this.roomId);
-    this.getPlayersFromRoom();
-    console.log(this.players)
+    //this.getPlayersFromRoom();
+    this.players = [{name: "Joe", score:42} as Player,
+                    {name: "Teddy", score:12} as Player,
+                    {name: "Nancy", score:5} as Player]
+    //console.log(this.players)
   }
 
   getPlayersFromRoom() {
