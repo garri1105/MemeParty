@@ -19,12 +19,12 @@ export class LobbyPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.player = this.navParams.get("player");
     this.roomId = this.navParams.get("roomId");
-    this.lobbyImage = "../../assets/imgs/placeholder.png";
+    this.lobbyImage = "assets/imgs/placeholder.png";
     let that = this;
 
     this.getData = function(data) {
       return new Promise((resolve, reject) => {
-        that.lobbyImage = "../../assets/memelibrary/" + data;
+        that.lobbyImage = "assets/memelibrary/" + data;
         console.log(that.lobbyImage);
         resolve();
       });
