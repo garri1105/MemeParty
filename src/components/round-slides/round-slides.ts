@@ -31,7 +31,7 @@ export class RoundSlidesComponent {
 
     this.timer = setInterval(function() {
       let now = new Date().getTime();
-      let distance = Math.floor((countDownOrigin + 4500 - now)/1000);
+      let distance = Math.floor((countDownOrigin + 45000 - now)/1000);
       that.time = distance+'';
 
       if (distance == 0) {
