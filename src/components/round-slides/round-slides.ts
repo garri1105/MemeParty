@@ -37,6 +37,7 @@ export class RoundSlidesComponent {
     this.roomData.getRoomList()
       .valueChanges().pipe(take(1))
       .subscribe(roomList => {
+        console.log('submitting1');
         let room = roomList.filter(room => room.id === this.roomId)[0];
         let submission: Submission = {
           imagePath: image,
@@ -45,6 +46,7 @@ export class RoundSlidesComponent {
           score: 0};
 
         room.submissions.push(submission);
+        console.log('submitting2');
         this.roomData.updateRoom(room);
       });
   }
@@ -58,7 +60,7 @@ export class RoundSlidesComponent {
       that.time = `${then.seconds() - now.seconds()}`;
 
       if (that.time === '0') {
-        that.navCtrl.push('VotingPage', {parent: that, roomId: that.roomId}).then(r => clearInterval(that.timer));
+        that.navCtrl.push('VotingPage', {parent: that, roomId: that.roomId, player: that.player}).then(r => clearInterval(that.timer));
       }
     }, 1000);
   }
@@ -67,7 +69,8 @@ export class RoundSlidesComponent {
     this.initTimer();
   }
 
-  ionViewWillEnter() {
+  resetView() {
+    console.log('Entering slides');
     if (this.slides.getActiveIndex() < this.slides.length() - 1) {
       this.caption = '';
       this.submitted = false;
@@ -77,6 +80,7 @@ export class RoundSlidesComponent {
       this.slides.lockSwipes(true);
     }
     else {
+      console.log('settingRoot')
       this.navCtrl.setRoot('WinnersPage');
     }
   }
