@@ -5,6 +5,7 @@ import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {listChanges} from "angularfire2/database";
 import {take} from "rxjs/operators";
 import {copy} from "@ionic/app-scripts";
+import {Player} from "../../models/player/player";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ import {copy} from "@ionic/app-scripts";
 export class VotingPage {
 
   submissions: Submission[];
+  player: Player;
   roomId: string;
   count: number;
   voted: boolean;
@@ -28,6 +30,7 @@ export class VotingPage {
     this.voted = false;
     this.parent = this.navParams.get('parent');
     this.roomId = this.navParams.get('roomId');
+    this.player = this.navParams.get('player');
     this.getSubmissions();
     this.setListenToPlayers();
   }
@@ -48,7 +51,9 @@ export class VotingPage {
       .subscribe(roomList => {
         let room = roomList.filter(room => room.id === this.roomId)[0];
 
-        if (room.voteCount === room.submissions.length - 1) {
+        console.log('VoteCount: ' + room.voteCount);
+        console.log('Submissions: ' + (room.submissions.length - 1));
+        if (room.submissions.length - 1 !== 0 && room.voteCount === room.submissions.length - 1) {
           let results = this.getResults(room.submissions);
           let resultString = results.map(r => r.player + ':' + r.score).join('\n');
 
@@ -67,7 +72,8 @@ export class VotingPage {
           alert.present();
           setTimeout(() => {
             alert.dismiss();
-            this.navCtrl.pop().then(r => this.parent.ionViewWillEnter());
+            console.log('popping page');
+            this.navCtrl.pop().then(r => this.parent.resetView());
           }, 5000);
         }
       });
@@ -93,15 +99,19 @@ export class VotingPage {
   }
 
   ionViewWillLeave() {
+    console.log('unsubscribing');
     this.listenToPlayers.unsubscribe();
 
-    this.roomData.getRoomList()
-      .valueChanges().pipe(take(1))
-      .subscribe(roomList => {
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        room.voteCount = 0;
-        room.submissions = [{player: '0'} as Submission];
-        this.roomData.updateRoom(room);
-      });
+    if (this.player.host && this.voted) {
+      setTimeout(() => this.roomData.getRoomList()
+        .valueChanges().pipe(take(1))
+        .subscribe(roomList => {
+          let room = roomList.filter(room => room.id === this.roomId)[0];
+          console.log('wipingData');
+          room.voteCount = 0;
+          room.submissions = [{player: '0'} as Submission];
+          this.roomData.updateRoom(room);
+        }), 1000);
+    }
   }
 }
