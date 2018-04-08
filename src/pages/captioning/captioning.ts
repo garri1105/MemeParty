@@ -8,39 +8,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CaptioningPage {
 
-	time:string;
+	time: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(private navCtrl: NavController) {
+    // Set countdown reference time
+    let countDownOrigin = new Date().getTime();
+    let that = this;
 
-	// Set countdown reference time
-	var countDownOrigin = new Date().getTime();
-	var that = this;
+    // Update the count down every 1 second
+    let x = setInterval(function() {
+      // Get todays date and time
+      let now = new Date().getTime();
 
-	// Update the count down every 1 second
-	var x = setInterval(function() {
+      // Find the distance between now an the count down date
+      let distance = Math.floor((countDownOrigin + 4500 - now)/1000);
 
-		// Get todays date and time
-		var now = new Date().getTime();
+      that.time = distance + "s";
 
-		// Find the distance between now an the count down date
-		var distance = Math.floor((countDownOrigin + 45000 - now)/1000);
-
-		that.time = distance + "s";
-
-  		// If the count down is finished, write some text 
-  		if (distance < 0) {
-    	clearInterval(x);
-    	document.getElementById("demo").innerHTML = "SUBMISSIONS OVER!";
-  		}
-  		console.log(this.time);
+      // If the count down is finished, write some text
+      if (distance == 0) {
+        that.navCtrl.setRoot('VotingPage');
+        clearInterval(x);
+      }
 		}, 1000);
-
 	}
-
-	ionViewDidLoad() {
-    	console.log('ionViewDidLoad CaptioningPage');
-  	}
-
-
 }
 
