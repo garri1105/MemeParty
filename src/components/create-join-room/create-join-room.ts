@@ -12,7 +12,7 @@ import {Submission} from "../../models/submission/submission";
 })
 export class CreateJoinRoomComponent {
 
-  player = {} as Player;
+  player = {score: 0} as Player;
   roomId: string;
 
   constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
@@ -43,7 +43,7 @@ export class CreateJoinRoomComponent {
       id: CreateJoinRoomComponent.makeId(5),
       started: false,
       voteCount: 0,
-      submissions: [{player: '0'} as Submission],
+      submissions: [{player: '0', imagePath: '0', score: 0, caption: '0'} as Submission],
       images: ['0'],
       users: [this.player]
     };
