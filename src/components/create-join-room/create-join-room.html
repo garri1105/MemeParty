@@ -10,5 +10,6 @@
     </ion-item>
     <button ion-button [disabled]="!player.name || !roomId" (click)="joinRoom()">Join</button>
     <button ion-button [disabled]="!player.name" (click)="createRoom()">Create</button>
+    <p *ngIf="!validId">Room doesn't exist</p>
   </ion-card-content>
 </ion-card>

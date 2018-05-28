@@ -1,14 +1,16 @@
-<ion-slides (ionSlideDidChange)="resetTimer()" #slides>
-  <ion-slide *ngFor="let image of images; let i = index">
-    <h2>Round {{ i+1 }} of {{ images.length }}</h2>
+<ion-slides #slides>
+  <ion-slide *ngFor="let image of images$ | async | toArray; let i = index">
+
+    <h2>Round {{ i+1 }} of {{ totalRounds }}</h2>
+
     <ion-card>
       <img class="currentPic" [src]="image"/>
-      <ion-textarea [(ngModel)]="caption" placeholder="Type your caption here."></ion-textarea>
+      <ion-textarea [(ngModel)]="caption" [placeholder]="'Type your caption here.'"></ion-textarea>
     </ion-card>
     <button ion-button class="subButton" (click)="submitCaption(image)" [disabled]="submitted">Submit</button>
 
-    <div class="timer" *ngIf="time >= 0">
-      {{time}}
+    <div class="timer">
+      {{displayedTime}}
     </div>
   </ion-slide>
 </ion-slides>

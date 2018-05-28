@@ -1,0 +1,10 @@
+<ion-list>
+  <ion-item *ngFor="let player of players$ | async | toArray">
+    <h2>
+      {{ player.name }}
+    </h2>
+    <div id="playerScore">
+      {{ player.score }}
+    </div>
+  </ion-item>
+</ion-list>

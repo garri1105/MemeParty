@@ -1,5 +1,8 @@
+import {Player} from "../player/player";
+
 export interface Submission {
-  player: string;
+  id: string;
+  player: Player;
   imagePath: string;
   caption: string;
   score: number;

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Player } from "../../models/player/player";
-import { Room } from "../../models/room/room"
-import {take} from "rxjs/operators";
+import { IonicPage, NavController } from 'ionic-angular';
 import {RoomDataProvider} from "../../providers/room-data/room-data";
+import {Subscription} from "rxjs/Subscription";
+import {Player} from "../../models/player/player";
+import {PlayerDataProvider} from "../../providers/player-data/player-data";
 
 
 @IonicPage()
@@ -14,27 +14,34 @@ import {RoomDataProvider} from "../../providers/room-data/room-data";
 export class LobbyPage {
 
   player: Player;
-  roomId: string;
   lobbyImage: string;
   selectedImage: boolean;
   submittedImage: boolean;
   getData: any;
-  listenToHost: any;
+  readyListener: Subscription;
+  playerListener: Subscription;
+  playersReady: boolean;
 
   constructor(private navCtrl: NavController,
-              private navParams: NavParams,
-              private roomData: RoomDataProvider) {
+              private roomData: RoomDataProvider,
+              private playerData: PlayerDataProvider) {
 
-    this.setListenToHost();
-    this.player = this.navParams.get("player");
-    this.roomId = this.navParams.get("roomId");
+    this.playerData.getPlayer().then(player => {
+      this.player = player;
+      if (this.player.host) {
+        this.setPlayerReadyListener();
+      }
+    });
+
+    this.setReadyListener();
     this.lobbyImage = "assets/imgs/placeholder.png";
     this.selectedImage = false;
     this.submittedImage = false;
     let that = this;
 
+    // TODO Handle error: If no image is selected when clicking done
     this.getData = function(data) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         that.lobbyImage = "assets/memelibrary/" + data;
         that.selectedImage = true;
         resolve();
@@ -42,37 +49,45 @@ export class LobbyPage {
     };
   }
 
-  startGame() {
-    this.roomData.getRoomList()
-      .valueChanges().pipe(take(1))
-      .subscribe(roomList => {
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        room.started = true;
-        this.roomData.updateRoom(room);
+  async startGame() {
+    await this.roomData.setReady(true);
+  }
+
+  setReadyListener() {
+    this.readyListener =
+      this.roomData.getReadyRef()
+        .valueChanges()
+        .subscribe(ready => {
+          if (ready) {
+            this.navCtrl.setRoot('CaptioningPage');
+          }
       });
   }
 
-  setListenToHost() {
-    this.listenToHost = this.roomData.getRoomList()
-      .valueChanges()
-      .subscribe(roomList => {
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        if (room.started) {
-          this.navCtrl.setRoot('CaptioningPage', {roomId: this.roomId, player: this.player});
-        }
-      });
+  setPlayerReadyListener() {
+    this.playerListener =
+      this.roomData.getPlayerListRef()
+        .valueChanges()
+        .subscribe(async players => {
+          let notReady = 0;
+          for (const [, player] of Object.entries(players)) {
+            console.log('Player ' + player);
+            if (!player.ready) {
+              notReady++;
+            }
+          }
+
+          console.log('NotReady: ' + notReady);
+          if (!notReady) {
+            this.playersReady = true;
+          }
+        });
   }
 
   submit() {
-    this.roomData.getRoomList()
-      .valueChanges().pipe(take(1))
-      .subscribe(roomList => {
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        room.images.push(this.lobbyImage);
-        this.roomData.updateRoom(room);
-      });
-
+    this.roomData.addImage(this.lobbyImage);
     this.submittedImage = true;
+    this.playerData.setReady(true);
   }
 
   toPhotoSelection() {
@@ -82,6 +97,9 @@ export class LobbyPage {
   }
 
   ionViewWillUnload() {
-    this.listenToHost.unsubscribe();
+    this.readyListener.unsubscribe();
+    if (this.player.host) {
+      this.playerListener.unsubscribe();
+    }
   }
 }

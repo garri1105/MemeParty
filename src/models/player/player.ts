@@ -1,6 +1,7 @@
 export interface Player {
-  key?: string;
+  id: string;
   name: string;
   score: number;
   host: boolean;
+  ready: boolean;
 }

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
-import {CreateJoinRoomComponent} from "../../components/create-join-room/create-join-room";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
-    HomePage,
-    CreateJoinRoomComponent
+    HomePage
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
+    ComponentsModule
   ],
 })
 export class HomePageModule {}

@@ -1,86 +1,112 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, Slides} from "ionic-angular";
 import {Submission} from "../../models/submission/submission";
-import {take} from "rxjs/operators";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
-import {Player} from "../../models/player/player";
-import * as moment from "moment";
-import {WinnersPage} from "../../pages/winners/winners";
+import {Observable} from "rxjs/Observable";
+import {PlayerDataProvider} from "../../providers/player-data/player-data";
+import {Subscription} from "rxjs/Subscription";
+import {makeId} from "../../utils";
 
+const TIME = 5;
+
+
+// TODO instead of using room for timer use a Round object. Makes voting easier as well
 @Component({
   selector: 'round-slides',
   templateUrl: 'round-slides.html'
 })
 export class RoundSlidesComponent {
   @ViewChild('slides') slides: Slides;
-  @Input() images: string[];
-  @Input() roomId: string;
-  @Input() player: Player;
-  time: string;
   submitted: boolean;
   caption: string;
-  timer: any;
-
-  secondsTimer = 20;
+  images$: Observable<string[]>;
+  timerListener: Subscription;
+  displayedTime: string;
+  roundNumber: number;
+  totalRounds: number;
 
   constructor(private navCtrl: NavController,
-              private roomData: RoomDataProvider) {
-    this.initTimer();
+              private roomData: RoomDataProvider,
+              private playerData: PlayerDataProvider) {
 
+    this.totalRounds = 0;
+    this.roundNumber = 0;
     setTimeout(() => {
       this.slides.lockSwipes(true);
     }, 1);
+
+    this.images$ = this.roomData.getImageListRef().valueChanges();
+    this.images$.forEach(images => {
+      this.totalRounds = images.length;
+    });
   }
 
-  submitCaption(image: string) {
+  async submitCaption(image: string) {
     this.submitted = true;
-    this.roomData.getRoomList()
-      .valueChanges().pipe(take(1))
-      .subscribe(roomList => {
-        console.log('submitting1');
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        let submission: Submission = {
-          imagePath: image,
-          player: this.player.name,
-          caption: this.caption,
-          score: 0};
+    let submission: Submission = {
+      id: makeId(10),
+      imagePath: image,
+      player: await this.playerData.getPlayer(),
+      caption: this.caption,
+      score: 0
+    };
 
-        room.submissions.push(submission);
-        console.log('submitting2');
-        this.roomData.updateRoom(room);
-      });
+    this.roomData.addSubmission(submission);
   }
 
   initTimer() {
-    let that = this;
-    let then = moment();
-    then.add(that.secondsTimer, 'seconds');
-    this.timer = setInterval(function() {
-      let now = moment();
-      that.time = `${then.seconds() - now.seconds()}`;
-
-      if (that.time === '0') {
-        that.navCtrl.push('VotingPage', {parent: that, roomId: that.roomId, player: that.player}).then(r => clearInterval(that.timer));
+    let time = TIME;
+    this.roomData.setTimer(TIME);
+    let timer = setInterval(async () => {
+      await this.roomData.setTimer(--time);
+      if (time === 0) {
+        clearInterval(timer);
       }
     }, 1000);
   }
 
-  resetTimer() {
-    this.initTimer();
+  setTimerListener() {
+    this.timerListener =
+      this.roomData.getTimerRef()
+        .valueChanges()
+        .subscribe(time => {
+          this.displayedTime = time.toString();
+          if (time === 0) {
+            this.navCtrl.push('VotingPage')
+          }
+        });
   }
 
-  resetView() {
+  startRound() {
+    this.playerData.setReady(false);
+    this.roundNumber++;
     console.log('Entering slides');
-    if (this.slides.getActiveIndex() < this.slides.length() - 1) {
+    console.log('Round number' + this.roundNumber);
+    console.log(this.totalRounds);
+    if (this.playerData.isHost()) {
+      this.initTimer();
+    }
+    this.setTimerListener();
+    if (this.roundNumber <= this.totalRounds || this.totalRounds === 0) {
       this.caption = '';
       this.submitted = false;
-      this.initTimer();
-      this.slides.lockSwipes(false);
-      this.slides.slideNext();
-      this.slides.lockSwipes(true);
+      if (this.roundNumber !== 1) {
+        this.slides.lockSwipes(false);
+        this.slides.slideNext();
+        this.slides.lockSwipes(true);
+      }
     }
     else {
-      this.navCtrl.push('WinnersPage', {roomId: this.roomId});
+      console.log('Setting winners as root');
+      this.navCtrl.setRoot('WinnersPage');
     }
+  }
+
+  endRound() {
+    console.log('Leaving slides');
+    if (this.playerData.isHost()) {
+      this.initTimer();
+    }
+    this.timerListener.unsubscribe();
   }
 }

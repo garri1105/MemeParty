@@ -1,0 +1,8 @@
+<ion-card *ngFor="let submission of submissions$ | async | toArray">
+
+  <img [src]='submission.imagePath'/>
+  <ion-card-content id="cardText">
+    {{submission.caption}}
+  </ion-card-content>
+  <button ion-button full (click)="vote(submission)" [disabled]="voted">Vote</button>
+</ion-card>

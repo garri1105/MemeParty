@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {Player} from "../../models/player/player";
 import {NavController} from "ionic-angular";
 import {RoomDataProvider} from "../../providers/room-data/room-data";
 import {Room} from "../../models/room/room";
-import {take} from "rxjs/operators";
-import {Submission} from "../../models/submission/submission";
+import {PlayerDataProvider} from "../../providers/player-data/player-data";
+import {makeId} from "../../utils";
+import {Player} from "../../models/player/player";
 
 @Component({
   selector: 'create-join-room',
@@ -12,54 +12,57 @@ import {Submission} from "../../models/submission/submission";
 })
 export class CreateJoinRoomComponent {
 
-  player = {score: 0} as Player;
+  player: Player;
+  validId: boolean = true;
   roomId: string;
 
-  constructor(private navCtrl: NavController, private roomData: RoomDataProvider) {
+  constructor(private navCtrl: NavController,
+              private roomData: RoomDataProvider,
+              private playerData: PlayerDataProvider) {
+
+    this.player = {
+      id: makeId(10),
+      name: 'Anonymous',
+      score: 0,
+      host: false,
+      ready: false
+    };
+  }
+
+  async enterRoom() {
+    let room$ = this.roomData.getRoomRefById(this.roomId);
+    if (room$) {
+      this.validId = true;
+      this.roomData.setCurrentRoom(this.roomId);
+      this.roomData.addPlayer(this.player).then(() => {
+        this.playerData.setPlayer(this.player, this.roomId);
+        this.navCtrl.push('LobbyPage')
+      });
+    }
+    else {
+      this.validId = false;
+    }
   }
 
   joinRoom() {
     this.player.host = false;
-    this.roomData.getRoomList()
-      .valueChanges().pipe(take(1))
-      .subscribe(roomList => {
-        let room = roomList.filter(room => room.id === this.roomId)[0];
-        if(room) {
-          room.users.push(this.player);
-          this.roomData.updateRoom(room);
-          this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': this.roomId})
-        } else {
-          location.reload();
-        }
-
-      });
-    ;
-
+    this.enterRoom();
   }
 
   createRoom() {
     this.player.host = true;
+    this.roomId = makeId(5);
     let room: Room = {
-      id: CreateJoinRoomComponent.makeId(5),
-      started: false,
-      voteCount: 0,
-      submissions: [{player: '0', imagePath: '0', score: 0, caption: '0'} as Submission],
-      images: ['0'],
-      users: [this.player]
+      id: this.roomId,
+      ready: false,
+      timer: -1,
+      submissions: [],
+      images: [],
+      players: [],
     };
 
-    this.roomData.addRoom(room);
-
-    this.navCtrl.push('LobbyPage', {'player': this.player, 'roomId': room.id});
-  }
-
-  static makeId(length: number) {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < length; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
+    this.roomData.addRoom(room).then(() => {
+      this.enterRoom();
+    });
   }
 }

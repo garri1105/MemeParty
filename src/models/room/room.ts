@@ -3,9 +3,9 @@ import {Submission} from "../submission/submission";
 
 export interface Room {
   id: string;
-  users: Player[];
+  players: Player[];
   submissions: Submission[];
   images: string[];
-  started: boolean;
-  voteCount: number;
+  ready: boolean;
+  timer: number;
 }

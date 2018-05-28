@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { MemeLibraryPage } from './meme-library';
-import {MemeTilesComponent} from "../../components/meme-tiles/meme-tiles";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
-    MemeLibraryPage,
-    MemeTilesComponent
+    MemeLibraryPage
   ],
   imports: [
     IonicPageModule.forChild(MemeLibraryPage),
+    ComponentsModule
   ],
 })
 export class MemeLibraryPageModule {}

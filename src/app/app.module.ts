@@ -10,17 +10,18 @@ import {AngularFireModule} from "angularfire2";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import { RoomDataProvider } from '../providers/room-data/room-data';
+import { PlayerDataProvider } from '../providers/player-data/player-data';
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -30,7 +31,8 @@ import { RoomDataProvider } from '../providers/room-data/room-data';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RoomDataProvider
+    RoomDataProvider,
+    PlayerDataProvider
   ]
 })
 export class AppModule {}

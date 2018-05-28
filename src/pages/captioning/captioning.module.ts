@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CaptioningPage } from './captioning';
-import {RoundSlidesComponent} from "../../components/round-slides/round-slides";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
-    CaptioningPage,
-    RoundSlidesComponent
+    CaptioningPage
   ],
   imports: [
     IonicPageModule.forChild(CaptioningPage),
+    ComponentsModule
   ],
 })
 export class CaptioningPageModule {}

@@ -8,13 +8,13 @@
 
 
 <ion-content padding>
-  <player-list [roomId]="roomId"></player-list>
+  <player-list></player-list>
 
   <ion-img class="tile" [src]="lobbyImage"></ion-img>
 
   <div id="lobbyButtons">
     <button ion-button full (click)="toPhotoSelection()" [disabled]="submittedImage">Select Photo</button><br/>
     <button ion-button full [disabled]="!selectedImage || submittedImage" (click)='submit()'>Submit</button><br/>
-    <button ion-button full (click)="startGame()" *ngIf="player.host" [disabled]="!selectedImage || !submittedImage">Start Game</button>
+    <button ion-button full (click)="startGame()" *ngIf="player?.host" [disabled]="!selectedImage || !submittedImage || !playersReady">Start Game</button>
   </div>
 </ion-content>
