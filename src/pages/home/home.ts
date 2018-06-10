@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,6 +8,18 @@ import { IonicPage } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor() {
+  constructor(public navCtrl: NavController) {
+  }
+
+  createRoom() {
+    this.navCtrl.push('CreateRoomPage');
+  }
+
+  joinRoom() {
+    this.navCtrl.push('JoinRoomPage');
+  }
+
+  howToPlay() {
+    this.navCtrl.push('HowToPlayPage');
   }
 }

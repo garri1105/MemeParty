@@ -1,26 +1,24 @@
-h1 {
-  font-size: 15vw;
-  text-align: center;
-  padding-top: 10%;
-}
+page-home {
+  h1 {
+    font-size: 15vw;
+    text-align: center;
+    padding-top: 6%;
+  }
 
-img {
-  display: block;
-  margin: auto;
-  width: 80%;
-}
+  img {
+    display: block;
+    margin: auto;
+    width: 80%;
+  }
 
-.buttonStack {
-  display: block;
-  margin: auto;
-  width: 90%;
-  position: absolute;
-  bottom: 10%;
-}
+  .buttonStack {
+    width: 80%;
+    position: absolute;
+    bottom: 6%;
+    left: 10%; // Used to center buttons
+  }
 
-.buttonStack .button {
-  font-size: 7vw;
-  border-radius: 13px;
-  padding: 7%;
-  margin-top: 20px;
+  .buttonStack .button {
+    margin-top: 20px;
+  }
 }

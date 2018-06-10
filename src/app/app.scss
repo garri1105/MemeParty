@@ -22,3 +22,19 @@
 * {
   font-family: PatrickHand;
 }
+
+.button {
+  border-radius: 13px;
+  font-size: 7vw;
+  height: 12vw;
+  text-transform: none;
+}
+
+.text-input-md, .text-input-ios {
+  margin: 2px;
+}
+
+// Prevents input fields from jittering when clicked
+.input-cover {
+  position: static;
+}
