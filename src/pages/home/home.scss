@@ -1,3 +1,26 @@
-page-home {
+h1 {
+  font-size: 15vw;
+  text-align: center;
+  padding-top: 10%;
+}
 
+img {
+  display: block;
+  margin: auto;
+  width: 80%;
+}
+
+.buttonStack {
+  display: block;
+  margin: auto;
+  width: 90%;
+  position: absolute;
+  bottom: 10%;
+}
+
+.buttonStack .button {
+  font-size: 7vw;
+  border-radius: 13px;
+  padding: 7%;
+  margin-top: 20px;
 }

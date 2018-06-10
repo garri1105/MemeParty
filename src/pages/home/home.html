@@ -1,14 +1,12 @@
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
+  <h1>
+    Meme Party
+  </h1>
 
-  <create-join-room></create-join-room>
+  <img src="../../assets/imgs/memePartyLogo.png">
 
+  <div class="buttonStack">
+    <button ion-button class="button button-block button-positive" color="primary" (click)="createRoom()">Create game</button>
+    <button ion-button class="button button-block button-positive" color="secondary" (click)="joinRoom()">Join game</button>
+  </div>
 </ion-content>
